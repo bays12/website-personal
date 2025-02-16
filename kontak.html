@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kontak Kami</title>
+    <link rel="stylesheet" href="kontak.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Kontak Kami</h1>
+    </header>
+
+    <!-- Navigasi -->
+    <nav>
+        <a href="beranda.html">Beranda</a>
+        <a href="produk.html">Produk</a>
+        <a href="tentang.html">Tentang Kami</a>
+        <a href="kontak.html" class="active">Kontak</a>
+    </nav>
+
+    <!-- Konten Halaman Kontak -->
+    <div class="contact-section">
+        <h2>Hubungi Kami</h2>
+        <p>Jika Anda memiliki pertanyaan atau membutuhkan informasi lebih lanjut, jangan ragu untuk menghubungi kami. Kami siap membantu Anda!</p>
+
+        <!-- Formulir Kontak -->
+        <form action="submit_contact_form.php" method="POST">
+            <label for="name">Nama Anda</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email Anda</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Pesan</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit">Kirim Pesan</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 MarketKami. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

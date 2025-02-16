@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Market Beranda</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://connect.facebook.net/en_US/sdk.js" async defer></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav {
+            background-color: #444;
+            overflow: hidden;
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        #login-btn, #logout-btn {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        #user-info {
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Selamat Datang di Market Kami!</h1>
+        <p>Temukan Produk Terbaik di Sini</p>
+    </header>
+
+    <nav>
+        <a href="#home">Beranda</a>
+        <a href="produk.html">Produk</a>
+        <a href="tentang.html">Tentang Kami</a>
+        <a href="kontak.html">Kontak</a>
+    </nav>
+
+    <div class="container">
+        <div id="login-btn">
+            <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID" data-callback="handleGoogleLogin"></div>
+            <div class="g_id_signin" data-type="standard"></div>
+            <br>
+            <button onclick="loginWithFacebook()">Login dengan Facebook</button>
+        </div>
+        <div id="user-info">
+            <p id="user-name"></p>
+            <button id="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 MarketKami. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        emailjs.init("YOUR_EMAILJS_USER_ID");
+        
+        function handleGoogleLogin(response) {
+            const userInfo = JSON.parse(atob(response.credential.split("."))[1]);
+            processLogin(userInfo.name, userInfo.email);
+        }
+
+        function loginWithFacebook() {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    FB.api('/me', {fields: 'name,email'}, function(userInfo) {
+                        processLogin(userInfo.name, userInfo.email);
+                    });
+                }
+            }, {scope: 'email'});
+        }
+
+        function processLogin(name, email) {
+            document.getElementById("user-name").textContent = "Selamat datang, " + name;
+            document.getElementById("user-info").style.display = "block";
+            document.getElementById("login-btn").style.display = "none";
+            
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                to_email: "kzcuanss1@gmail.com",
+                user_email: email,
+                user_name: name
+            }).then(function(response) {
+                console.log("Email berhasil dikirim", response.status, response.text);
+            }, function(error) {
+                console.log("Gagal mengirim email", error);
+            });
+        }
+
+        function logout() {
+            document.getElementById("user-info").style.display = "none";
+            document.getElementById("login-btn").style.display = "block";
+            alert("Anda telah logout.");
+        }
+
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: 'YOUR_FACEBOOK_APP_ID',
+                cookie: true,
+                xfbml: true,
+                version: 'v12.0'
+            });
+        };
+    </script>
+</body>
+</html>
